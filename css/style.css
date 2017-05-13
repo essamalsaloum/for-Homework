@@ -1,0 +1,134 @@
+*{
+    box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+body{
+    background: lightgrey;
+    text-align:center;  
+}
+#myDiv{
+	width: 70%;
+	border-radius:10px;	
+	margin: 1% auto;
+	background-color:rgba(102, 102, 102, 0.16); 
+	overflow: auto;
+}
+h1{
+    background-color:#fffafa ;
+    color: #000000;
+    font-size: 300%;
+	font-family:inherit;
+	width: 95%;
+	margin: 2% ;
+}
+ul{
+	width: 95%;
+}
+li{
+	background-color: #3b3737;
+	padding: 2%;
+	width:100%;
+	border-radius:10px;
+	text-align: center;
+	list-style: none;
+	float:left; 
+	position: relative;
+	margin: 2%;
+	height: auto;
+}
+img{
+	width:40%;
+	float:right;
+	clear: both;
+	margin: 2%;
+	position: relative;
+	right:10px;
+}
+h2{
+    background-color:#4c4643 ;
+    color: #ffffff;
+    font-size: 200%;
+	font-family:cursive;	
+	margin: 1%;
+	float:left;
+}
+p{
+    color: #ffffff;
+    font-size: 100%;
+	font-family:sans-serif;
+	margin: 1%;
+	float:right;
+	line-height:200%;
+	text-align: left;
+	clear: both;
+	position: relative;
+	right: 120px;
+}
+a{
+	float:right;
+	display: block;
+	clear: both;
+	margin: 1%;
+	text-align: center;
+	font-size: 150%;
+	position: relative;
+	right: 90px;
+	color: aliceblue;
+}
+/*--------------------------------------*/
+#search{
+	margin: 60px auto;
+	padding: 15px;
+	width: 70%;
+	text-align: center;
+	color: #000000;
+	background: #eee;						
+	border-radius:15px;
+	box-shadow: 0px 0px 15px #555; 
+}
+#searchfield{
+	border: none;
+	padding: 5px 10px;
+	margin: 5px;
+	background: #fff;
+	color: #000000;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 15px #555;
+	width: 50%;
+	height: 45px;
+	font-weight: bold;
+	font-size: 110%;
+}
+#searchbutton{
+	padding: 5px 10px;
+	margin: 5px;
+	color:  #000000;
+	border-radius:10px;
+	height: 45px;
+	font-weight: bold;
+	font-size: 110%;
+}
+span{
+	display: block;
+}
+.hide{
+	cursor: not-allowed;
+	pointer-events: none;	
+}
+/*.hidd{
+	visibility: hidden;
+}
+.visibl{
+	visibility: visible;
+}
+*/
+/* overflow or like this 
+#myDiv:after{
+	content: ".";
+	visibility: hidden;
+	display: block;
+	clear: both;
+	height: 0;
+}
+*/	
