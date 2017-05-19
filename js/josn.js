@@ -1,109 +1,117 @@
 /*global console*/
 "use strict";
-window.onload = function () {
-	document.getElementById('searchfield').focus();
-};
+document.getElementById('searchfield').focus();
+var mainTitel = document.createElement('h1');
+document.getElementById('myDiv').appendChild(mainTitel);
+mainTitel.textContent = "Movies and series";
+var listOfMovies = document.createElement('Ul');
+document.getElementById('myDiv').appendChild(listOfMovies);
+listOfMovies.setAttribute("id", "mainList");
 
-var newDiv = document.createElement("div");
-document.body.appendChild(newDiv);
-var h1 = document.createElement('h1');
-newDiv.appendChild(h1);
-h1.textContent = "Movies and series";
-newDiv.setAttribute("id", "myDiv");
-var myUl = document.createElement('Ul');
-document.getElementById('myDiv').appendChild(myUl);
-myUl.setAttribute("id", "mainLs");
-//-----------------------------------------------------------------------------
 var myFiled = document.getElementById("searchfield");
 var myButton = document.getElementById("searchbutton");
-
+var myspn = document.getElementById("msg");
+var xx = document.getElementById('searchfield').value;
+//this event to Execut Another function Which Makeing a request to the API
 myButton.onclick = function () {
-    var paraMet = document.getElementById('searchfield').value;
-	myButton.classList.add("hide");
-	myButton.classList.add("hide");
-	myButton.style.backgroundColor = '@eee';
-	myButton.style.color = 'lightgray';
-	if (myFiled.value !== "") {
-		doXhrReq(paraMet);
+    var xx = document.getElementById('searchfield').value;
+	doXhrReq(xx);
+};
+//this event to get the value of the search field when the user click a Enter button 
+myFiled.onkeydown = function (event) {
+    var xx = document.getElementById('searchfield').value;
+	if (event.key === "Enter") {
+		doXhrReq(xx);
 	}
 };
-myFiled.onfocus = function () {
-    myFiled.value = "";
-	myUl.innerHTML = "";
-	myButton.classList.remove("hide");
-	myButton.style.backgroundColor = '';
-	myButton.style.color = '';
-	console.clear();
-};
-//-----------------------------------------------------------------------------
-function doXhrReq(keyWr) {
+//function Which Makeing a request to the API and Execut Another function to create Eache Movie
+function doXhrReq(keySearch) {
 	var xhr = new XMLHttpRequest();
-	var requestURL = 'http://www.omdbapi.com/?s=' + keyWr;
-	xhr.open('GET', requestURL, true);
+	var requestURL = 'http://www.omdbapi.com/?s=' + keySearch;
+	xhr.open('GET', requestURL);
 
 	function processRequest() {
 		console.log(xhr.readyState);
-		if (xhr.readyState == 4) {
+		if (xhr.readyState === 4) {
 			console.log("xhr request DONE SON");
 			console.log(xhr.response);
-			createMovList(xhr);
+			listOfMovies.innerHTML = "";
+			j = 0;
+			createEacheMovie(xhr);
 		}
 	}
 	console.log("retrieving movie data request");
 	xhr.onreadystatechange = processRequest;
 	xhr.send();
 }
-//-----------------------------------------------------------------------------
-function createMovList(info) {
-	var objects = JSON.parse(info.responseText);
-	var myUl = document.getElementById('mainLs');
-
-	for (var i = 0; i < objects.Search.length; i = i + 1) {
-	var myMov = objects.Search[i];
-		
-	var movEle = document.createElement('li');
-	myUl.appendChild(movEle);
-		
-	var h2 = document.createElement('h2');
-	movEle.appendChild(h2);
-	h2.textContent =  myMov.Title;
-		
-	var p = document.createElement('p');
-	movEle.appendChild(p);
-	p.innerHTML = "Year :  " + myMov.Year + "<br>" + "Type :  " + myMov.Type + "<br>";
-		
-	var movUrl = document.createElement('a');
-	movEle.appendChild(movUrl);
-	movUrl.textContent = "Click here for more";
-	movUrl.setAttribute("href", "http://www.imdb.com/title/" + myMov.imdbID);
-	movUrl.setAttribute("target", "_blank");
-		
-	var movImg = document.createElement('img');
-	movImg.innerHTML = myMov.Poster;
-	movImg.setAttribute("src", myMov.Poster);
-	movEle.appendChild(movImg);
-		
-	};
-}	
-		//myUl.onmouseout = function(n){
-			//if (n.target.nodeName == "LI") {
-				//for (var i =0; i<movEle.length; i++){
-				//h2[i].classList.remove("hidd");
-				//movUrl[i].classList.add("hidd");
-				//movImg[i].classList.add("hidd");
-				//p[i].classList.add("hidd");	
-				//}
-			//n.target.classList.add("hidd");
-			//};
-		//};
+//function to create Eache Movie list, With a condition if the Response Not found
+function createEacheMovie(data) {
+	var finalData = JSON.parse(data.response);
+	//console.log(finalData);
 	
-//function doSomething(e) {
-	//if (!e) var e = window.event;
-	//var tg = (window.event) ? e.srcElement : e.target;
-	//if (tg.nodeName != 'DIV') return;
-	//var reltg = (e.relatedTarget) ? e.relatedTarget : e.toElement;
-	//while (reltg != tg && reltg.nodeName != 'BODY')
-		//reltg= reltg.parentNode
-	//if (reltg== tg) return;
-	// Mouseout took place when mouse actually left layer
-	// Handle event
+	if (finalData.Response === "True") {
+		myspn.innerHTML = "Enter Word To Search :";
+		myspn.style.color = "black";
+		
+		var listOfMovies = document.getElementById('mainList');
+		for (var i = 0; i < finalData.Search.length; i = i + 1) {
+			var eacheMovie = finalData.Search[i];
+    		var elementsOfMovie = createElementsOfMovie(eacheMovie);
+    		listOfMovies.appendChild(elementsOfMovie);
+		}	
+		//To move between movies and show other information and image when hovering on the titel 
+		listOfMovies.onmouseover = function (e) {
+
+			for (var i =1; i <= finalData.Search.length; i++) {
+				//console.log(finalData.Search.length);
+				if (e.target.id === "hh2"+i) {
+					document.getElementById("img"+i).style.display = "block";
+					document.getElementById("p"+i).style.display = "block";			
+						
+					// console.log(document.getElementById("img"+i));
+				} else {
+					document.getElementById("img"+i).style.display = "none";
+					document.getElementById("p"+i).style.display = "none";
+				}
+			}
+		};
+	}
+	else {
+		myspn.innerHTML = "No movies";
+		myspn.style.color = "red";
+	}
+};
+
+var j = 0;
+//function to Create all the elements for each movie
+function createElementsOfMovie(Movies) {
+	var holderInfo = document.createElement('li');
+	holderInfo.setAttribute("id", "li_"+j );
+	var titleMov = document.createElement('h2');
+	holderInfo.appendChild(titleMov);
+	titleMov.textContent =(j += 1) +  "- " + Movies.Title;
+	titleMov.setAttribute("id", "hh2"+j );
+	var infoMov = document.createElement('p');
+	holderInfo.appendChild(infoMov);
+	infoMov.innerHTML = "Year :  " + Movies.Year + "<br>" + "Type :  " + Movies.Type + "<br>";
+	infoMov.setAttribute("id", "p"+j );
+	infoMov.classList.add("hidd");
+	var linkMov = document.createElement('a');
+	holderInfo.appendChild(linkMov);
+	linkMov.textContent = "Click here for more";
+	linkMov.setAttribute("href", "http://www.imdb.com/title/" + Movies.imdbID );
+	linkMov.setAttribute("target", "_blank");
+	linkMov.setAttribute("id", "a"+ j  );
+	var movImg = document.createElement('img');
+		if (Movies.Poster == "N/A") {
+		movImg.innerHTML = "";
+		} else{
+			movImg.innerHTML = Movies.Poster;
+			movImg.setAttribute("src", Movies.Poster);
+			movImg.setAttribute("id", "img"+j  );
+			holderInfo.appendChild(movImg);
+			movImg.classList.add("hidd");
+			
+			}
+return holderInfo;
+};
