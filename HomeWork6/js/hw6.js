@@ -55,7 +55,7 @@ function createEacheOne(data) {
 		mainHolder.appendChild(allElementsOflist);
 	}
 	if (finalData.message =="Not Found"){
-		myspn.innerHTML = "No movihhhes";
+		myspn.innerHTML = "Not Found";
 		myspn.style.color = "red";
 	};	 
 };
