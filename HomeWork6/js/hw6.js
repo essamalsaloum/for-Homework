@@ -35,22 +35,17 @@ function doXhrReq(keySearch) {
 		xhr.open('GET', requestURL);
 
 	function processRequest() {
-		console.log(xhr.readyState);
 		if (xhr.readyState === 4) {
-			console.log("xhr request DONE SON");
-			console.log(xhr.response);
 			mainHolder.innerHTML = "";
 			createEacheOne(xhr);
 		}
 	}
-	console.log("retrieving movie data request");
 	xhr.onreadystatechange = processRequest;
 	xhr.send();
 }
 //function to create Eache Movie list, With a condition if the Response Not found
 function createEacheOne(data) {
 	var finalData = JSON.parse(data.response);
-	console.log(finalData);
 	
 	if (finalData.login !== null && finalData.message !=="Not Found" ) {
 		myspn.innerHTML = "Enter Word To Search :";
