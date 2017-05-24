@@ -1,7 +1,9 @@
 /*global console*/
 "use strict";
-var nnm;
-document.getElementById('searchfield').focus();
+
+var search = document.getElementById('searchfield');
+search.focus();
+
 var mainHolder = document.createElement('div');
 document.getElementById('myDiv').appendChild(mainHolder);
 mainHolder.setAttribute("id", "mainList");
@@ -14,7 +16,7 @@ var xx = document.getElementById('searchfield').value;
 myButton.onclick = function () {
     var xx = document.getElementById('searchfield').value;
 	doXhrReq(xx);
-};
+}
 doXhrReq(xx);
 //this event to get the value of the search field when the user click a Enter button 
 myFiled.onkeydown = function (event) {
@@ -22,44 +24,65 @@ myFiled.onkeydown = function (event) {
 	if (event.key === "Enter") {
 		doXhrReq(xx);
 	}
-};
+}
 //function Which Makeing a request to the API and Execut Another function to get Elem
 function doXhrReq(keySearch) {
-	var xhr = new XMLHttpRequest();
+	
 	var requestURL = '';
-	if (keySearch === "" ){
+	if (keySearch === "") {
 		requestURL = 'https://api.github.com/users/' + "essamalsaloum";
 	}else {
 		requestURL = 'https://api.github.com/users/' + keySearch;
 	}
-		xhr.open('GET', requestURL);
+	var httpRequest;
+	
+	makeRequest();
 
-	function processRequest() {
-		if (xhr.readyState === 4) {
-			mainHolder.innerHTML = "";
-			createEacheOne(xhr);
+	// create and send an XHR request
+	function makeRequest() {
+		httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = responseMethod;
+		httpRequest.open('GET', requestURL);
+		//httpRequest.onerror = (e) => e.preventDefault()
+		//console.log(httpRequest)
+		//console.log(httpRequest.status);
+		httpRequest.send();
+	}
+	// handle XHR response
+	function responseMethod() {
+		if (httpRequest.readyState === 4) {
+			if (httpRequest.status === 200) {
+				updateUISuccess(httpRequest.responseText);
+				//console.log("httpRequest request DONE SON");
+				//console.log(httpRequest.responseText);
+				//createEacheOne(httpRequest.responseText);
+			} else {
+				updateUIError();
+			}
 		}
 	}
-	xhr.onreadystatechange = processRequest;
-	xhr.send();
-}
-//function to create Eache Movie list, With a condition if the Response Not found
-function createEacheOne(data) {
-	var finalData = JSON.parse(data.response);
-	
-	if (finalData.login !== null && finalData.message !=="Not Found" ) {
+	// handle XHR success
+	function updateUISuccess(responseText) {
+		var response = JSON.parse(httpRequest.responseText);
+		mainHolder.innerHTML = "";
 		myspn.innerHTML = "Enter Word To Search :";
 		myspn.style.color = "black";
-		var mainHolder = document.getElementById('mainList');
-		var allElementsOflist = createElemFromData(finalData);
-		mainHolder.appendChild(allElementsOflist);
+		createEacheOne(response);
 	}
-	if (finalData.message =="Not Found"){
-		myspn.innerHTML = "Not Found";
+	// handle XHR error
+	function updateUIError() {
+		myspn.innerHTML = "Not found";
 		myspn.style.color = "red";
-	};	 
-};
-
+	}
+}
+//function to create Eache data list, 
+function createEacheOne(data) {
+	
+	//console.log(data);
+	var mainHolder = document.getElementById('mainList');
+	var allElementsOflist = createElemFromData(data);
+	mainHolder.appendChild(allElementsOflist); 
+}
 //function to Create all the elements 
 function createElemFromData(db) {
 	nnm = db;
@@ -92,10 +115,13 @@ function createElemFromData(db) {
 	profLink.appendChild(avatarImg);
 	holderInfo.appendChild(profLink);	
 return holderInfo;
-}
+};
 //for info when click on the name
-function nameClick(){ 
+var nnm;
+function nameClick(e){
+	e.preventDefault();
 	if (document.getElementById("pp") == null) {
+		
 		var infoUser = document.createElement('p');
 		infoUser.setAttribute("id", "pp");
 		var holderInfo = document.getElementById("holder");
@@ -103,4 +129,4 @@ function nameClick(){
 	
 		holderInfo.appendChild(infoUser);
 	}	
-}
+};
