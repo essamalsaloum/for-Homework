@@ -227,7 +227,3 @@ function createElemFromData2(myData2){
 		}
 		
 }
-
-
-
-
