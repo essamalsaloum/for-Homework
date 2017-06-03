@@ -89,6 +89,7 @@ function createEacheOne1(Data1) {
 	var allElementsOflist1 = createElemFromData1(finalData1);
 	mainHolder.appendChild(allElementsOflist1);
 }
+
 //function to create Eache part of data with new call api
 var finalData2;
 function createEacheOne2(Data2) {
@@ -100,6 +101,7 @@ function createEacheOne2(Data2) {
 	
 	var allElementsOflist2 = createElemFromData2(Data2);
 }
+
 var finalData3;
 //function to create Eache part of data with new call api
 function createEacheOne3(Data3) {
