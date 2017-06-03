@@ -13,7 +13,7 @@ body {
 	margin: 1% auto;
 	background-color:rgba(102, 102, 102, 0.16); 
 }
-#myDiv:after{
+#mainList:after{
 	content: ".";
 	visibility: hidden;
 	display: block;
@@ -23,52 +23,59 @@ body {
 
 h1 {
     background-color:#fffafa ;
-    color: #000000;
-    font-size: 300%;
+    color:#000000;
+    font-size:300%;
 	font-family:inherit;
-	width: 95%;
-	margin: 2% ;
+	width:95%;
+	margin:2%;
+	float: left;
+}
+#aimg {
+	width: 35%;
+/*    background-color: chartreuse;*/
+    /* float: left; */
+    /* clear: both; */
+    left: 6%;
+    position: relative;
 }
 
-img {
-	width:30%;
-	float:right;
-	clear: both;
-	margin: 2%;
-	position: relative;
-	right:100px;
-	
+
+img  {
+	width: 97%;
+    /* float: left; */  
+  
 }
 h2 {
     font-size: 150%;
 	font-family:cursive;	
 	margin: 1%;
-	float:left;
+	float: left;
 	position: relative;
 	clear: both;
 	left:70px;
 }
 h3 {
     font-size: 150%;
-	font-family:sans-serif;	
-	margin: 1%;
-	float:left;
-	position: relative;
-	clear: both;
-	left:70px;
+    font-family: sans-serif;
+    margin: 1%;
+    position: relative;
+    clear: both;
+    float: left;
+    left: 70px;
+/*	left:70px;*/
 }
-p {
+#pp {
     color: #ffffff;
     font-size: 100%;
-	font-family:sans-serif;
-	margin: 1%;
-	float:right;
-	line-height:200%;
-	text-align: left;
-	clear: both;
-	position: relative;
-	right: 200px;
-	
+    font-family: sans-serif;
+    margin: 1%;
+/*    display: inline-block;*/
+    line-height: 200%;
+    text-align: left;
+    position: relative;
+    right: -58px;
+    float: left;
+    top: 0;
 }
 
 a {
@@ -76,22 +83,45 @@ a {
 	clear: both;
 	color: black;	
 }
-ol {
-	
+ul {
+
+    left: -27%;
+    display: inline-block;
+    top: -430px;
+    float: right;
+    position: relative;
 	
 }
 li {
-	padding: 0.5%;
-	width:100%;
+	padding: 4%;
+    width: 278px;
+    text-align: left;
+	margin: 40px;
+	
+
+   
+    list-style-position: inside;
+	background-color: #c9c6c3;
+}
+.asideOfList{
+	background-color:#f2aa62;
+	position: absolute;
+	left:88%;
 	text-align: left;
-	margin: 3%;
-	list-style-type: none;
-	list-style-position: inside;
-	position: relative;
-	left:70px;
+	float: right;
+	height: auto;
+	width: 300px;
+	font-size: 110%;
+	padding: 6%;
 	
 }
-
+.asi-b{
+	background-color:cornsilk;
+}
+.mainasid{
+	background-color:#c9c6c3;
+	padding: 1%;
+}
 #search {
 	margin: 60px auto;
 	padding: 15px;
@@ -133,7 +163,10 @@ span {
 	pointer-events: none;	
 }
 .hidd {
-	display: none;
-		
+	visibility:hidden !important;
+/*	display: none ;*/
+	
+
 }
+
 
