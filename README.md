@@ -1,5 +1,4 @@
 # the assignments of  JavaScript 
 
-##for all the assignments in HackYourFuture 
+for all the assignments in HackYourFuture 
 
-------------------------------------------
