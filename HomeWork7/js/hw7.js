@@ -93,7 +93,7 @@ var finalData1;
 //function to create Eache part of data, 
 function createEacheOne1(Data1) {
 	loaderEl.classList.add("invisible");
-	finalData1 = JSON.parse(Data1);
+	var finalData1 = JSON.parse(Data1);
 
 	respondata1.push(finalData1);
 	var dataStructure = respondata1.map(
@@ -165,7 +165,6 @@ function createEacheOne3(Data3) {
 
 //function to Create all the elements profile 
 function createElemFromData1(myData1) {
-	//console.log(finalData1);
 	var holderInfo = document.createElement('section');
 	holderInfo.setAttribute("id", "holder");
 	var user = document.createElement('h2');
