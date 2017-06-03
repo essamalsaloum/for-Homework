@@ -89,7 +89,7 @@ function updateUISuccess(info) {
 	myspn.style.color = "black";
 	createEacheOne1(info);	
 }
-var finalData1;	
+	
 //function to create Eache part of data, 
 function createEacheOne1(Data1) {
 	loaderEl.classList.add("invisible");
