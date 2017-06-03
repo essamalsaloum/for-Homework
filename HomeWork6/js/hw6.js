@@ -5,6 +5,7 @@ var search = document.getElementById('searchfield');
 search.focus();
 
 var mainHolder = document.createElement('section');
+
 document.getElementById('myDiv').appendChild(mainHolder);
 mainHolder.setAttribute("id", "mainList");
 
@@ -142,7 +143,10 @@ function createElemFromData1(myData1) {
 	
 	var infoUser = document.createElement('p');
 	infoUser.setAttribute("id", "pp");
-	infoUser.innerHTML ="name : " + finalData1.name + "<br>" + "Created at : " + finalData1.created_at + "<br>"+  "updated at : " + finalData1.updated_at + "<br>" +  "ID :  " + finalData1.id + "<br>";
+	infoUser.innerHTML ="name : " + finalData1.name + "<br>" 
+		+ "Created at : " + finalData1.created_at + "<br>"
+		+  "updated at : " + finalData1.updated_at + "<br>" 
+		+  "ID :  " + finalData1.id + "<br>";
 	holderInfo.appendChild(infoUser);
 	infoUser.classList.add("hidd");
 	
