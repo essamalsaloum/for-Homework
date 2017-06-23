@@ -37,8 +37,8 @@ function doXhrReq(keySearch) {
 	} else {
 		requestURL = github + 'users/' + keySearch;
 	}
-	var Promise = makeRequest(requestURL);
-	Promise.then(updateUISuccess).catch(updateUIError);
+	var pr1Req = makeRequest(requestURL);
+	pr1Req.then(updateUISuccess).catch(updateUIError);
 }
 doXhrReq("essamalsaloum");
 
@@ -209,8 +209,9 @@ function numberOfPublicClick(e,myData1) {
 	e.preventDefault();
 	if (document.getElementById("mianUl") === null){
 		//makeRequest(github + "users/" + finalData1.login + "/repos",createEacheOne2);
-		var Promise = makeRequest(github + "users/" + myData1[0].login + "/repos");
-		Promise.then(createEacheOne2).catch(updateUIError);
+		var pr2Req = makeRequest(github + "users/" + myData1[0].login + "/repos");
+		pr2Req
+			.then(createEacheOne2).catch(updateUIError);
 	}
 	
 }
@@ -220,15 +221,19 @@ function createElemFromData2(myData2){
 		//console.log(finalData2);
 		var listOfRep = document.createElement("ul");
 		listOfRep.setAttribute("id", "mianUl");
+		
 		var holderInfo = document.getElementById("holder");
 		holderInfo.appendChild(listOfRep);
 		for (var i = 0; i < myData2.length; i++) {
 			var listOfRepEleme= document.createElement("li")
 			listOfRep.appendChild(listOfRepEleme);
+		//	document.getElementById("mianUl")
 			listOfRepEleme.setAttribute("id", i + "li");
 			listOfRepEleme.setAttribute("title", myData2[i].name);
 			listOfRepEleme.innerHTML = myData2[i].name;
+			
 			listOfRepEleme.addEventListener('mouseover',function(e){ repoonMouseover(e,myData2);});
+			listOfRepEleme.addEventListener('mouseout',function(e){ repoonMouseout(e,myData2);});
 			var asideOfList= document.createElement("aside");
 			listOfRepEleme.appendChild(asideOfList);
 			asideOfList.setAttribute("id", "aside" + i);
@@ -244,21 +249,38 @@ function createElemFromData2(myData2){
 
 //for showing all the repos info by the aside when Mouseover on list Of Repos
 function repoonMouseover (e,myData2) {
+	setTimeout(function() {
+       for (var i =0; i < myData2.length; i++) {
+		console.log(e.target.className);
+		   if (e.target.id === i + "li") {
+				document.getElementById(i+"li").style.backgroundColor = "#f2aa62";
+			   	
+				document.getElementById("aside"+i).style.visibility ="visible";
+			} 
+	   }
+    }, 200);
 	
-	for (var i =0; i < myData2.length; i++) {
-		
-		if (e.target.id === i + "li") {
-			document.getElementById(i+"li").style.backgroundColor = "#f2aa62";
-			document.getElementById("aside"+i).style.visibility ="visible";
-			
-		} else {
-			document.getElementById(i+"li").style.backgroundColor = "#c9c6c3";
-			document.getElementById("aside"+i).style.visibility = "hidden";
-		}
-	}
 	testCondition(e,myData2);
 	
 }
+
+function repoonMouseout (e,myData2) {
+	
+	setTimeout(function() {
+       for (var i =0; i < myData2.length; i++) {
+		//console.log(e.target.className);
+		   if (e.target.id === i + "li") {
+			document.getElementById(i+"li").style.backgroundColor = "#c9c6c3";
+			document.getElementById("aside"+i).style.visibility ="hidden";	
+			
+			   
+		   }  
+	   }
+    }, 350);
+	
+}
+
+//setTimeout(repoonMouseout, 10000);
 var listOfRepEleme;
 //Important to test the condition before running in order to avoid duplicating elements or undefined element
 function testCondition(e,myData2){
@@ -270,8 +292,8 @@ function testCondition(e,myData2){
 		var newUrl = github + 'repos/' + respondata1["0"]["0"].login
 					+ '/' + myData2[parseInt(e.target.id)].name +'/events';
 		
-		var Promise = makeRequest(newUrl);
-		Promise.then(createEacheOne3).catch(updateUIError);
+		var Pr3Req = makeRequest(newUrl);
+		Pr3Req.then(createEacheOne3).catch(updateUIError);
 					
 	}		
 }
@@ -289,7 +311,7 @@ function createElemFromData3(myData3){
 				var asOfMessage= document.createElement("aside");
 				asOfMessage.setAttribute("id", "asi-b"+i );
 				asOfMessage.setAttribute("class", "asi-b" );
-			
+				
 				listOfRepEleme.childNodes[1].appendChild(asOfMessage);
 				if (myData3[i].type == "PushEvent") {
 					asOfMessage.innerHTML = "message : "+myData3[i].payload.commits[0].message;
